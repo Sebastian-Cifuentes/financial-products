@@ -87,8 +87,6 @@ export class AddProductComponent {
     this.loading = false;
   }
 
-
-
   async save() {
     try {
       if (this.form.invalid) {

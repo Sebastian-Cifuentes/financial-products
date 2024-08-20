@@ -54,24 +54,6 @@ th {
     
 }
 
-.paginator {
-    cursor: pointer;
-    i {
-        margin: 0 10px;
-    }
-    ul {
-        list-style: none;
-        display: flex;
-        li {
-            margin: 0 10px;
-            color: #cecece;
-        }
-        .active {
-            color: #000;
-        }
-    }
-}
-
 .context-menu {
     position: relative;
     i {

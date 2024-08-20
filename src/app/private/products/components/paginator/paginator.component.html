@@ -1,0 +1,19 @@
+<div class="filters flex justify-content-between align-items-center">
+    <p class="results">{{results}} resultados</p>
+    <div class="paginator flex justify-content-between w-1">
+        <i (click)="changePage(page >= 2 ? page - 1 : page)" class="fas fa-arrow-left"></i>
+        <ul>
+            @for(p of pages; track $index) {
+                <li (click)="changePage(p)" [ngClass]="{'active': p === page}">{{p}}</li>
+            }
+        </ul>
+        <i (click)="changePage(page < pages.length ? page + 1 : page)" class="fas fa-arrow-right"></i>
+    </div>
+    <div class="select-container">
+        <select [formControl]="quantity" (ngModelChange)="quantityProducts()" class="input-control">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+        </select>
+    </div>
+</div>

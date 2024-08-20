@@ -1,0 +1,6 @@
+<div class="flex justify-content-between mt-4">
+    <div class="input-group w-2">
+        <input [formControl]="search" (ngModelChange)="searching()" type="text" class="input-control" placeholder="Buscar">
+    </div>
+    <button routerLink="/add-product" class="button-primary">Agregar</button>
+</div>
