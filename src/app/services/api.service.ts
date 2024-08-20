@@ -1,12 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
+
+/** Environments */
 import { environment } from '../../environment/environment';
+
+/** Interfaces */
+import { IApiService } from '../interfaces/api-service.interface';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ApiServiceService implements IApiService {
+export class ApiService implements IApiService {
   private httpClient: HttpClient;
   protected apiUrl = environment.apiUrl;
 

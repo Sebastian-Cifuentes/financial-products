@@ -1,10 +1,10 @@
 <div class="m-0 mx-auto w-10">
 
     <div class="flex justify-content-between mt-4">
-        <div class="w-2">
+        <div class="input-group w-2">
             <input type="text" class="input-control" placeholder="Buscar">
         </div>
-        <button class="button-primary">Agregar</button>
+        <button routerLink="/add-product" class="button-primary">Agregar</button>
     </div>
 
     <div class="table-container">
@@ -32,14 +32,21 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Data 1</td>
-                    <td>Data 2</td>
-                    <td>Data 3</td>
-                    <td>Data 4</td>
-                    <td>Data 4</td>
-                    <td><i class="fas fa-ellipsis-v"></i></td>
-                </tr>
+                @for(product of products; track $index) {
+                    <tr>
+                        <td>{{product.logo}}</td>
+                        <td>{{product.name}}</td>
+                        <td>{{product.description}}</td>
+                        <td>{{product.date_release}}</td>
+                        <td>{{product.date_revision}}</td>
+                        <td>
+                            <label (click)="selectProduct = product" for="check-modal">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </label>
+                            <i [routerLink]="'/edit-product/' + product.id" class="fas fa-ellipsis-v"></i>
+                        </td>
+                    </tr>
+                }
 
             </tbody>
         </table>
@@ -57,21 +64,19 @@
 
 </div>
 
-<div class="btn-modal">
-    <label for="check-modal">Abrir modal</label>
-</div>
 
 <input type="checkbox" id="check-modal">
 <div class="container-modal">
     <div class="content-modal">
         <div class="content-header">
-            <h2>Bienvenido</h2>
+            <h2>Eliminar producto</h2>
         </div>
         <div class="content-body">
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi sunt quisquam amet inventore pariatur molestiae culpa perspiciatis, facere non voluptatibus minima ab enim officia doloremque ratione quasi reiciendis consequatur hic.</p>
+            <p>Estas seguro de eliminar el producto {{ selectProduct?.name }}?</p>
         </div>
         <div class="content-footer">
-            <label for="check-modal">Cerrar</label>
+            <label class="button-secondary mr-2" for="check-modal">Cerrar</label>
+            <label (click)="delete(selectProduct.id)" class="button-primary" for="check-modal">Eliminar</label>
         </div>
     </div>
 </div>

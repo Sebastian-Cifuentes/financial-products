@@ -1,12 +1,12 @@
 import { Injectable, Injector } from '@angular/core';
-import { ApiServiceService } from './api-service.service';
+import { ApiService } from './api.service';
 import { Product } from '../interfaces/product.interface';
 import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProductServiceService extends ApiServiceService {
+export class ProductService extends ApiService {
 
   constructor(
     injector: Injector
@@ -16,6 +16,10 @@ export class ProductServiceService extends ApiServiceService {
 
   getProducts(): Promise<any> {
     return this.get('products');
+  }
+  
+  getProduct(id: string): Promise<any> { 
+    return this.get(`products/${id}`);
   }
   
   addProduct(product: Product) {
@@ -29,7 +33,7 @@ export class ProductServiceService extends ApiServiceService {
   deleteProduct(id: string) {
     const params = new HttpParams()
       .set('id', id);
-    return this.get(`products/${id}`, { params });
+    return this.delete(`products/${id}`, { params });
   }
 
 

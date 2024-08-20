@@ -14,6 +14,10 @@ export const PRIVATE_ROUTES: Routes = [
         component: AddProductComponent
     },
     {
+        path: 'edit-product/:id',
+        component: AddProductComponent
+    },
+    {
         path: '**',
         redirectTo: 'products'
     }

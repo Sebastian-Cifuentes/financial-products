@@ -1,40 +1,47 @@
-<div class="form w-8 m-0 mx-auto mt-4">
-    <h2 class="form-title">Formulario de registro</h2>
-    <br>
-    <hr>
-    <form class="grid" action="">
-        <div class="input-group col-6">
-            <label class="input-label" for="id">ID</label>
-            <input type="text" class="input-control" >
-            <small class="text-red">ID no válido</small>
+@if (!loading) {
+    <div class="form w-8 m-0 mx-auto mt-4">
+        <h2 class="form-title">{{ id ? 'Editar producto' : 'Formulario de registro' }}</h2>
+        <br>
+        <hr>
+        <form [formGroup]="form" class="grid" action="">
+            <div class="input-group col-6">
+                <label class="input-label" for="id">ID</label>
+                <input formControlName="id" type="text" class="input-control" [ngClass]="{'input-invalid': idControl.invalid && idControl.touched}">
+                <small *ngIf="idControl.invalid && idControl.touched" class="text-red">ID no válido</small>
+            </div>
+            <div class="input-group col-6">
+                <label class="input-label" for="name">Nombre</label>
+                <input formControlName="name" type="text" class="input-control" [ngClass]="{'input-invalid': nameControl.invalid && nameControl.touched}">
+                <small *ngIf="nameControl.invalid && nameControl.touched" class="text-red">Este campo es requerido</small>
+            </div>
+            <div class="input-group col-6">
+                <label class="input-label" for="description">Descripción</label>
+                <input formControlName="description" type="text" class="input-control" [ngClass]="{'input-invalid': descriptionControl.invalid && descriptionControl.touched}">
+                <small *ngIf="descriptionControl.invalid && descriptionControl.touched" class="text-red">Este campo es requerido</small>
+            </div>
+            <div class="input-group col-6">
+                <label class="input-label" for="logo">Logo</label>
+                <input formControlName="logo" type="text" class="input-control" [ngClass]="{'input-invalid': logoControl.invalid && logoControl.touched}">
+                <small *ngIf="logoControl.invalid && logoControl.touched" class="text-red">Este campo es requerido</small>
+            </div>
+            <div class="input-group col-6">
+                <label class="input-label" for="date_release">Fecha liberación</label>
+                <input formControlName="date_release" type="date" class="input-control" [ngClass]="{'input-invalid': dateReleaseControl.invalid && dateReleaseControl.touched}">
+                <small *ngIf="dateReleaseControl.invalid && dateReleaseControl.touched" class="text-red">Este campo es requerido</small>
+            </div>
+            <div class="input-group col-6">
+                <label class="input-label" for="date_revision">Fecha revisión</label>
+                <input formControlName="date_revision" type="date" class="input-control" [ngClass]="{'input-invalid': dateRevisionControl.invalid && dateRevisionControl.touched}">
+                <small *ngIf="dateRevisionControl.invalid && dateRevisionControl.touched" class="text-red">Este campo es requerido</small>
+            </div>
+        </form>
+        <div class="buttons flex justify-content-center mt-4">
+            <button (click)="clear()" class="button-secondary mr-2">
+                Reiniciar
+            </button>
+            <button (click)="save()" class="button-primary">
+                Enviar
+            </button>
         </div>
-        <div class="input-group col-6">
-            <label class="input-label" for="name">Nombre</label>
-            <input type="text" class="input-control" >
-        </div>
-        <div class="input-group col-6">
-            <label class="input-label" for="description">Descripción</label>
-            <input type="text" class="input-control" >
-        </div>
-        <div class="input-group col-6">
-            <label class="input-label" for="logo">Logo</label>
-            <input type="text" class="input-control" >
-        </div>
-        <div class="input-group col-6">
-            <label class="input-label" for="date_release">Fecha liberación</label>
-            <input type="text" class="input-control" >
-        </div>
-        <div class="input-group col-6">
-            <label class="input-label" for="date_revision">Fecha revisión</label>
-            <input type="text" class="input-control" >
-        </div>
-    </form>
-    <div class="buttons flex justify-content-center mt-4">
-        <button class="button-secondary mr-2">
-            Reiniciar
-        </button>
-        <button class="button-primary">
-            Enviar
-        </button>
     </div>
-</div>
+}
