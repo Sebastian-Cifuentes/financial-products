@@ -144,12 +144,16 @@ body {
 /*Button styles*/
 .button-primary {
     padding: 10px 15px;
-    background-color: #f0b511;
+    background-color: rgba(240, 181, 17, 1);
     color: black;
     font-weight: bold;
     border-radius: 5px;
     border: 0;
     cursor: pointer;
+    &:disabled {
+        cursor: not-allowed;
+        background-color: rgba(240, 181, 17, 0.5);
+    }
 }
 
 .button-secondary {

@@ -42,9 +42,54 @@ th {
     position: relative;
 }
 
-.paginator {
+.filters {
     background-color: white;
     .results {
         background-color: white;
+    }
+}
+
+.not-found-text {
+    text-align: center;
+    
+}
+
+.paginator {
+    cursor: pointer;
+    i {
+        margin: 0 10px;
+    }
+    ul {
+        list-style: none;
+        display: flex;
+        li {
+            margin: 0 10px;
+            color: #cecece;
+        }
+        .active {
+            color: #000;
+        }
+    }
+}
+
+.context-menu {
+    position: relative;
+    i {
+        cursor: pointer;
+    }
+    ul {
+        list-style: none;
+        position: absolute;
+        left: -60px;
+        bottom: 20px;
+        li {
+            background-color: white;
+            width: 80px;
+            padding: 5px 10px;
+            cursor: pointer;
+            label {
+                cursor: pointer;
+            }
+        }
     }
 }

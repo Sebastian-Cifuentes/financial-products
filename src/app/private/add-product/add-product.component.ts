@@ -1,9 +1,17 @@
 import { Component, Input } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Product } from '../../interfaces/product.interface';
-import { ProductService } from '../../services/product.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+
+/** Interfaces */
+import { Product } from '../../interfaces/product.interface';
+
+/** Services */
+import { ProductService } from '../../services/product.service';
+import { FormErrorService } from '../../services/form-error.service';
+
+/** Custom validators */
+import { dateValidator } from '../../../utils/validators/date-validator';
 
 @Component({
   selector: 'app-add-product',
@@ -43,6 +51,7 @@ export class AddProductComponent {
 
   constructor(
     private _productsService: ProductService,
+    private _formErrorService: FormErrorService,
     private router: Router
   ) {
 
@@ -56,15 +65,29 @@ export class AddProductComponent {
     this.loading = true;
     let product: Product = await this.getProduct();
     this.form = new FormGroup({
-      id: new FormControl({value: product?.id || '', disabled: product?.id ? true : false}, Validators.required),
-      name: new FormControl(product?.name || '', Validators.required),
-      description: new FormControl(product?.description || '', Validators.required),
-      logo: new FormControl(product?.logo || '', Validators.required),
-      date_release: new FormControl(product?.date_release || '', Validators.required),
-      date_revision: new FormControl(product?.date_revision || '', Validators.required),
+      id: new FormControl(
+        {value: product?.id || '', disabled: product?.id ? true : false},
+        [Validators.required, Validators.maxLength(10), Validators.minLength(3)]),
+      name: new FormControl(
+        product?.name || '',
+        [Validators.required, Validators.maxLength(100), Validators.minLength(5)]),
+      description: new FormControl(
+        product?.description || '',
+        [Validators.required, Validators.maxLength(200), Validators.minLength(10)]),
+      logo: new FormControl(
+        product?.logo || '',
+        Validators.required),
+      date_release: new FormControl(
+        product?.date_release || '',
+        [Validators.required, dateValidator]),
+      date_revision: new FormControl(
+        {value: product?.date_revision || '', disabled: true},
+        Validators.required),
     })
     this.loading = false;
   }
+
+
 
   async save() {
     try {
@@ -72,9 +95,9 @@ export class AddProductComponent {
         this.form.markAllAsTouched();
         return;
       }
-      const product: Product = this.form.value;
+      const product: Product = this.form.getRawValue();
       if (this.id) {
-        await this._productsService.editProduct(product);
+        await this._productsService.editProduct(this.id, product);
       } else {
         await this._productsService.addProduct(product);
       }
@@ -94,5 +117,23 @@ export class AddProductComponent {
     }
     return await this._productsService.getProduct(this.id);
   }
+
+  public getErrorMessage(field: AbstractControl): string[] {
+    if (field && field.errors) {
+      return this._formErrorService.mapErrors(field, "Este campo");
+    }
+    return [];
+  }
+
+  validateDate() {
+    const today = new Date();
+    return today.toISOString().split('T')[0];
+  }
+
+  setDateRevision() {
+    const date = new Date(this.dateReleaseControl.value || new Date());
+    date.setFullYear(date.getFullYear() + 1);
+    this.dateRevisionControl.patchValue(date.toISOString().split('T')[0]);
+  } 
 
 }

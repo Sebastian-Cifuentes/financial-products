@@ -26,8 +26,8 @@ export class ProductService extends ApiService {
     return this.post('products', product);
   }
   
-  editProduct(product: Product) {
-    return this.put(`products/${product.id}`, product);
+  editProduct(id: string, product: Product) {
+    return this.put(`products/${id}`, product);
   }
   
   deleteProduct(id: string) {
