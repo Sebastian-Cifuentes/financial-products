@@ -9,8 +9,7 @@ export class FormErrorService {
   errorMap: { [key: string]: (c: AbstractControl, name: string) => string } = {
     'required': (c: AbstractControl, name: string) => `${name} es requerido`,
     'minlength': (c: AbstractControl, name: string) => `${name} debe ser de ${c.errors!['minlength'].requiredLength} carácteres o más`,
-    'maxlength': (c: AbstractControl, name: string) => `${name} debe ser de ${c.errors!['maxlength'].requiredLength} carácteres o menos`,
-    'invalidDate': (c: AbstractControl, name: string) => `Debe ser mayor o igual a hoy`
+    'maxlength': (c: AbstractControl, name: string) => `${name} debe ser de ${c.errors!['maxlength'].requiredLength} carácteres o menos`
   }
 
   public mapErrors(control: AbstractControl, name: string): string[] {

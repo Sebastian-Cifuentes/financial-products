@@ -23,6 +23,7 @@ import { dateValidator } from '../../../utils/validators/date-validator';
 export class AddProductComponent {
 
   @Input() id!: string;
+  product!: Product;
   form!: FormGroup;
   loading = false;
   get idControl(): AbstractControl {
@@ -63,25 +64,25 @@ export class AddProductComponent {
 
   async init() {
     this.loading = true;
-    let product: Product = await this.getProduct();
+    await this.getProduct();
     this.form = new FormGroup({
       id: new FormControl(
-        {value: product?.id || '', disabled: product?.id ? true : false},
+        {value: this.product?.id || '', disabled: this.product?.id ? true : false},
         [Validators.required, Validators.maxLength(10), Validators.minLength(3)]),
       name: new FormControl(
-        product?.name || '',
+        this.product?.name || '',
         [Validators.required, Validators.maxLength(100), Validators.minLength(5)]),
       description: new FormControl(
-        product?.description || '',
+        this.product?.description || '',
         [Validators.required, Validators.maxLength(200), Validators.minLength(10)]),
       logo: new FormControl(
-        product?.logo || '',
+        this.product?.logo || '',
         Validators.required),
       date_release: new FormControl(
-        product?.date_release || '',
+        this.product?.date_release || '',
         [Validators.required, dateValidator]),
       date_revision: new FormControl(
-        {value: product?.date_revision || '', disabled: true},
+        {value: this.product?.date_revision || '', disabled: true},
         Validators.required),
     })
     this.loading = false;
@@ -101,7 +102,8 @@ export class AddProductComponent {
       }
       this.router.navigateByUrl('products');
     } catch(error) {
-      console.log(error);
+      this.idControl.setErrors({duplicate: true});
+      console.error(error);
     }
   }
 
@@ -113,7 +115,8 @@ export class AddProductComponent {
     if (!this.id) {
       return null;
     }
-    return await this._productsService.getProduct(this.id);
+    this.product = await this._productsService.getProduct(this.id);
+    return;
   }
 
   public getErrorMessage(field: AbstractControl): string[] {

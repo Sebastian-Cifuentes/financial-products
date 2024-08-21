@@ -29,18 +29,18 @@
             <tbody>
                 @for(product of products; track $index) {
                     <tr>
-                        <td>
+                        <td class="logo">
                             <img width="50" [src]="product.logo" alt="">
                         </td>
-                        <td>{{product.name}}</td>
-                        <td>{{product.description}}</td>
-                        <td>{{product.date_release}}</td>
-                        <td>{{product.date_revision}}</td>
+                        <td class="name">{{product.name}}</td>
+                        <td class="description">{{product.description}}</td>
+                        <td class="date_release">{{product.date_release}}</td>
+                        <td class="date_revision">{{product.date_revision}}</td>
                         <td>
                             <div class="context-menu">
                                 <i (click)="triggleMenu(product)" class="fas fa-ellipsis-v"></i>
                                 @if(showContextMenu && selectProduct.id === product.id) {
-                                    <ul>
+                                    <ul class="context-menu-list">
                                         <li>
                                             <label (click)="selectProduct = product" for="check-modal">
                                                 Eliminar
@@ -81,7 +81,7 @@
         </div>
         <div class="content-footer">
             <label class="button-secondary mr-2" for="check-modal">Cerrar</label>
-            <label (click)="delete(selectProduct.id)" class="button-primary" for="check-modal">Eliminar</label>
+            <label (click)="deleteProduct(selectProduct.id)" class="button-primary" for="check-modal">Eliminar</label>
         </div>
     </div>
 </div>

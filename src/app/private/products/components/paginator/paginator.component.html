@@ -10,7 +10,7 @@
         <i (click)="changePage(page < pages.length ? page + 1 : page)" class="fas fa-arrow-right"></i>
     </div>
     <div class="select-container">
-        <select [formControl]="quantity" (ngModelChange)="quantityProducts()" class="input-control">
+        <select [formControl]="quantity" (ngModelChange)="filterProducts()" class="input-control">
             <option value="5">5</option>
             <option value="10">10</option>
             <option value="20">20</option>

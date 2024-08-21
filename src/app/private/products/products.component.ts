@@ -39,14 +39,14 @@ export class ProductsComponent {
     this.loading = false;
   }
 
-  async delete(id: string) {
+  async deleteProduct(id: string) {
     await this._productsService.deleteProduct(id);
     await this.getProducts();
   }
 
   filterData(data: Product[]) {
     this.paginator.data = data;
-    this.paginator.quantityProducts();
+    this.paginator.filterProducts();
   }
 
   triggleMenu(product: Product) {

@@ -13,12 +13,13 @@ import { RouterModule } from '@angular/router';
 export class SearchBarComponent {
 
   @Input() data!: Product[];
+  filterData: Product[] = [];
   @Output() onsearch: EventEmitter<Product[]> = new EventEmitter<Product[]>();
   search = new FormControl('');
 
   searching() {
-    const data = this.data.filter(product => product.name.includes(this.search.value!));
-    this.onsearch.emit(data)
+    this.filterData = this.data.filter(product => product.name.includes(this.search.value!));
+    this.onsearch.emit(this.filterData)
   }
 
 }

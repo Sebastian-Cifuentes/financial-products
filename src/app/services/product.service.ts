@@ -14,11 +14,11 @@ export class ProductService extends ApiService {
     super(injector);
   }
 
-  getProducts(): Promise<any> {
+  getProducts(): Promise<{data: Product[]}> {
     return this.get('products');
   }
   
-  getProduct(id: string): Promise<any> { 
+  getProduct(id: string): Promise<Product> { 
     return this.get(`products/${id}`);
   }
   

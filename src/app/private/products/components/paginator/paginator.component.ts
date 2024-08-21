@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 export class PaginatorComponent {
 
   @Input() data: Product[] = [];
+  filterData: Product[] = [];
   @Output() onpaginator: EventEmitter<Product[]> = new EventEmitter<Product[]>();
   quantity = new FormControl(5);
   page = 1;
@@ -20,10 +21,10 @@ export class PaginatorComponent {
   results = 0;
 
   ngOnInit(): void {
-    this.quantityProducts();
+    this.filterProducts();
   }
 
-  quantityProducts() {
+  filterProducts() {
     this.pages = [];
     const limit = +this.quantity.value!;
     const lastPage = Math.ceil(this.data?.length / limit);
@@ -35,13 +36,14 @@ export class PaginatorComponent {
     
     const startIndex = (this.page - 1) * limit;
     const endIndex = startIndex + limit;
-    this.results = this.data?.slice(startIndex, endIndex)?.length;
-    this.onpaginator.emit(this.data?.slice(startIndex, endIndex));
+    this.filterData = this.data?.slice(startIndex, endIndex);
+    this.results = this.filterData?.length;
+    this.onpaginator.emit(this.filterData);
   }
 
   changePage(page: number) {
       this.page = page;
-      this.quantityProducts();
+      this.filterProducts();
   }
 
 }
